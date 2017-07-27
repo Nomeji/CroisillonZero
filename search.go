@@ -45,13 +45,14 @@ func getTweets() []struct{Text string}{
 	}
 	resp.Body.Close()
 
-	fmt.Println("nb result :"+result.Statuses.size())
-	return result.Statuses[0].Entities.Hashtags
+	fmt.Println("nb result : ")
+	fmt.Print(len(r.Statuses))
+	return r.Statuses{Entities{Hashtags{Text}}}
 }
 
 
 func main() {
 	hashtags := getTweets()
 	
-	fmt.Println("hashtag :"+result.Statuses[0].Entities.Hashtags[0].Text)
+	fmt.Println("hashtag :"+hashtags[0].Text)
 }
