@@ -21,7 +21,7 @@ type result struct {
 		}
 	}
 
-func getTweets() []struct{Text string}{
+func getTweets() []struct{Text string `json:"text"`}{
 	bearer := "Bearer "+getBearer()
 	fmt.Println(bearer)
 
@@ -45,9 +45,18 @@ func getTweets() []struct{Text string}{
 	}
 	resp.Body.Close()
 
-	fmt.Println("nb result : ")
-	fmt.Print(len(r.Statuses))
-	return r.Statuses{Entities{Hashtags{Text}}}
+	fmt.Print("nb result : ")
+	nbStatues := len(r.Statuses)
+	fmt.Println(nbStatues)
+	i := 0
+	found := false
+	for !found && i<nbStatues {
+		found = len(r.Statuses[i].Entities.Hashtags) != 0
+		fmt.Println(len(r.Statuses[i].Entities.Hashtags))
+		i++
+	}
+	if !found {log.Fatal("No hastag found")}
+	return r.Statuses[i-1].Entities.Hashtags
 }
 
 
